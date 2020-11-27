@@ -120,8 +120,13 @@ function save()
         {
             let employee = createEmployeePayroll();
             CreateAndSaveLocalStorage(employee);
-            alert(employee.toString());
-            return true;
+            if(isUpdate)
+                alert("Successfully Updated");
+            else
+            {
+                alert(employee.toString());
+            }
+            window.location.replace(site_properties.home_page);
         }
         catch(e)
         {
@@ -136,17 +141,24 @@ function save()
     return false;
 }
 //Function to create local storage
-function CreateAndSaveLocalStorage(employeeEntry)
+function CreateAndSaveLocalStorage(employee)
 {
+    let employeePayrollList = [];
+    employeePayrollList = JSON.parse(localStorage.getItem("NewEmployeePayrollList")); 
     if(employeePayrollList != undefined)
     {
-        employeePayrollList.push(employeeEntry); 
+        let index =employeePayrollList.findIndex(emp => emp._id == employee._id);
+        if(index != -1)
+        employeePayrollList.splice(index,1,employee);
+        else
+            employeePayrollList.push(employee); 
     } 
     else
     { 
-        employeePayrollList = [employeeEntry] ;
-    } 
+        employeePayrollList = [employee] ;
+    }
     localStorage.setItem("NewEmployeePayrollList", JSON.stringify(employeePayrollList))
+     
 }
 //retriving data from form
 const createEmployeePayroll=()=>

@@ -52,8 +52,6 @@ const update = (node) =>{
   if(employeePayrollData != undefined)
   {
       localStorage.setItem("editEmp",JSON.stringify(employeePayrollData));
-      employeeList.splice(employeePayrollData,1);
-      localStorage.setItem("NewEmployeePayrollList", JSON.stringify(employeeList));
       window.location.replace(site_properties.add_user);
   }
 }
