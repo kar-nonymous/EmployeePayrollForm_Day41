@@ -1,6 +1,7 @@
 let employeeList = [];
 window.addEventListener('DOMContentLoaded', ()=>{
     createEmployeeTable();
+
 });
 
 const createEmployeeTable = ()=>{
@@ -16,9 +17,9 @@ const createEmployeeTable = ()=>{
             <td>${empPayrollData._salary}</td>
             <td>${empPayrollData._startDate}</td>
             <td>
-            <img id="${empPayrollData.id}" onclick="remove(this)" 
+            <img id="${empPayrollData._id}" onclick="remove(this)" 
                 src="../assets/icons/delete-black-18dp.svg" alt="delete">
-            <img id="${empPayrollData.id}" onclick="update(this)" 
+            <img id="${empPayrollData._id}" onclick="update(this)" 
                 src="../assets/icons/create-black-18dp.svg" alt="edit"></td>
         </tr>
     `;
@@ -45,6 +46,16 @@ const getDeptHtml = (deptList) => {
 
 let askDelete = (name) =>{
     return confirm("Do you want to continue with the deletion of employee!!"+name);
+}
+const update = (node) =>{
+  let employeePayrollData = employeeList.find(emp => emp._id == node.id);
+  if(employeePayrollData != undefined)
+  {
+      localStorage.setItem("editEmp",JSON.stringify(employeePayrollData));
+      employeeList.splice(employeePayrollData,1);
+      localStorage.setItem("NewEmployeePayrollList", JSON.stringify(employeeList));
+      window.location.replace(site_properties.add_user);
+  }
 }
 
 function createJsonFile()
